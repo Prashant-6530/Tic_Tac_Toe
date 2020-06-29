@@ -8,14 +8,12 @@ import android.widget.Button;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "";
     boolean gameActive = true;
+
     int activePlayer = 0;
     //0 - Yellow, 1 - Red, 2 - Empty;
     int [] gameState = {2,2,2,2,2,2,2,2,2};
@@ -48,20 +46,46 @@ public class MainActivity extends AppCompatActivity {
 
             counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
             for (int[] winningPosition : winningPositions) {
+                TextView tvResults = findViewById(R.id.tvResults);
+                Button btnPlayAgain = findViewById(R.id.btnPlayAgain);
+                GridLayout gridLayout = findViewById(R.id.gridLayout);
+
+                ImageView counter1 = (ImageView) gridLayout.getChildAt(0);
+                ImageView counter2 = (ImageView) gridLayout.getChildAt(1);
+                ImageView counter3 = (ImageView) gridLayout.getChildAt(2);
+                ImageView counter4 = (ImageView) gridLayout.getChildAt(3);
+                ImageView counter5 = (ImageView) gridLayout.getChildAt(4);
+                ImageView counter6 = (ImageView) gridLayout.getChildAt(5);
+                ImageView counter7 = (ImageView) gridLayout.getChildAt(6);
+                ImageView counter8 = (ImageView) gridLayout.getChildAt(7);
+                ImageView counter9 = (ImageView) gridLayout.getChildAt(8);
+
                 if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != 2) {
                     String winner = "";
                     gameActive = false;
                     if (activePlayer == 1) {
                         winner = "Yellow";
+                        tvResults.setText(winner + " has won !");
+                        tvResults.setVisibility(View.VISIBLE);
+                        btnPlayAgain.setVisibility(View.VISIBLE);
+                        break;
                     } else {
                         winner = "Red";
+                        tvResults.setText(winner + " has won !");
+                        tvResults.setVisibility(View.VISIBLE);
+                        btnPlayAgain.setVisibility(View.VISIBLE);
+                        break;
                     }
-                    TextView tvResults = findViewById(R.id.tvResults);
-                    Button btnPlayAgain = findViewById(R.id.btnPlayAgain);
-                    tvResults.setText(winner + " has won !");
-                    tvResults.setVisibility(View.VISIBLE);
-                    btnPlayAgain.setVisibility(View.VISIBLE);
-                    //Toast.makeText(this, winner + " has won !", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    if(counter1.getDrawable()!=null && counter2.getDrawable()!=null && counter3.getDrawable()!=null &&
+                            counter4.getDrawable()!=null && counter5.getDrawable()!=null &&
+                            counter6.getDrawable()!=null && counter7.getDrawable()!=null && counter8.getDrawable()!=null &&
+                            counter9.getDrawable()!=null){
+                        tvResults.setText("It's a draw !");
+                        tvResults.setVisibility(View.VISIBLE);
+                        btnPlayAgain.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
